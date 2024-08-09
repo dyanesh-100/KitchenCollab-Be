@@ -1,25 +1,10 @@
 const recipeModel = require('../models/recipeModel')
 const recipeData = require('../Data/recipeData')
-const multer = require('multer')
-const path = require('path')
+
 const { request, response } = require('express');
 const { error } = require('console');
 
-const storage = multer.diskStorage({
-  destination: (request,file,cb) =>{
-    cb(null, 'uploads/')
-  },
-  filename:(request,file,cb) =>{
-    cb(null, `${Date.now()} + ${file.originalname}`)
-  }
 
-})
-
-const upload = multer({storage: storage}) 
-
-const singleFileUpload = (request,response) => {
-  upload.single('file')(request,response, error)
-}
 
 const getAllRecipeData = async(request,response) =>{
   try{
@@ -34,6 +19,8 @@ const getAllRecipeData = async(request,response) =>{
     response.status(500).json({message:err.message})
   }
 }
+
+
 const addNewRecipe = async(request, response) => {
   try {
     
@@ -72,6 +59,8 @@ const getRecipeDataByName = async (request,response) => {
         response.status(500).json({message:err.message})
       }
 }
+
+
 
 
 module.exports={getAllRecipeData,getRecipeDataById,getRecipeDataByName,addNewRecipe}
