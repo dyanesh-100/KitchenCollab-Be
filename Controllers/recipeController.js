@@ -25,8 +25,8 @@ const addNewRecipe = async(request, response) => {
   const recipeImages = request.files;
   const recipeData = request.body;
 
-  console.log('Files:', req.files); // Log files received
-  console.log('Body:', req.body);
+  console.log('Files:', request.files); // Log files received
+  console.log('Body:', request.body);
 
   let images = [];
   if (recipeImages && recipeImages.length > 0){
@@ -63,7 +63,8 @@ const getRecipeDataById = async(request,response) => {
     response.status(200).json(recipe)
   }
   catch(err){
-    response.status(500).json({message:err.message})
+    console.error('Error adding recipe:', err); // Log the full error
+    response.status(500).json({ message: err.message });
   }
 }
 const getRecipeDataByName = async (request,response) => {
