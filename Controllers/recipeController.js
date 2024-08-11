@@ -32,10 +32,13 @@ const addNewRecipe = async(request, response) => {
 
   try{
     const newRecipe = new recipeModel({
-      name : recipeData.recipeName,
+      recipeName : recipeData.recipeName,
       description : recipeData.description,
-      ingredients : recipeData.ingredients,
-      steps : recipeData.steps,
+      
+      
+      ingredients: Array.isArray(recipeData.ingredients) ? recipeData.ingredients : [recipeData.ingredients], 
+      steps: Array.isArray(recipeData.steps) ? recipeData.steps : [recipeData.steps], 
+      
       prep_time : recipeData.prep_time,
       cooking_time : recipeData.cooking_time,
       total_time : recipeData.total_time,
