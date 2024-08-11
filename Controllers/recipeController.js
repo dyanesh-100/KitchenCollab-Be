@@ -1,6 +1,5 @@
 const recipeModel = require('../models/recipeModel')
 const recipeData = require('../Data/recipeData')
-
 const { request, response } = require('express');
 const { error } = require('console');
 
@@ -22,10 +21,29 @@ const getAllRecipeData = async(request,response) =>{
 
 
 const addNewRecipe = async(request, response) => {
-  try {
-    
-    const newRecipe = await recipeModel.create(request.body);
-    response.status(201).json(newRecipe);
+  
+  const recipeImages = request.files;
+  const recipeData = request.body;
+
+  let images = [];
+  if (recipeImages && recipeImages.length > 0){
+      images = recipeImages.map(file => file.path.replace("\\","/"));
+  }
+
+  try{
+    const newRecipe = new recipeModel({
+      name : recipeData.recipeName,
+      description : recipeData.description,
+      ingredients : recipeData.ingredients,
+      steps : recipeData.steps,
+      prep_time : recipeData.prep_time,
+      cooking_time : recipeData.cooking_time,
+      total_time : recipeData.total_time,
+      nutrition_info : recipeData.nutrition_info,
+      images : images
+    })
+    const addedRecipe = await newRecipe.save()
+    return response.status(201).send(addedRecipe)
   } 
   catch(err) {
     response.status(500).json({message:err.message})
@@ -44,14 +62,14 @@ const getRecipeDataById = async(request,response) => {
 }
 const getRecipeDataByName = async (request,response) => {
     try{
-        const expectedRecipeName = request.params.name;
+        const expectedRecipeName = request.params.recipeName;
         const recipe = await recipeModel.findOne({
             $expr: {
-                $eq: [{ $toLower: "$name" }, expectedRecipeName]
+                $eq: [{ $toLower: "$recipeName" }, expectedRecipeName]
             }
         });
         if (!recipe) {
-            return response.status(404).send({ message: `${request.params.name} not found` });
+            return response.status(404).send({ message: `${request.params.recipeName} not found` });
         }        
         response.status(200).json(recipe)
       }

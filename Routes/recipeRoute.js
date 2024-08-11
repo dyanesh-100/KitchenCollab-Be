@@ -1,10 +1,7 @@
 const express = require("express")
-const multer = require('multer')
-const path = require('path');
 
-
-
-const { getAllRecipeData, getRecipeDataByName,addNewRecipe,uploadImage } = require("../Controllers/recipeController")
+const { getAllRecipeData, getRecipeDataByName,addNewRecipe} = require("../Controllers/recipeController")
+const upload = require("../middleware/uploads")
 
 
 const router = express.Router()
@@ -12,9 +9,9 @@ const router = express.Router()
 
 router.get('/',getAllRecipeData)
 
-router.post('/addrecipe',addNewRecipe)
+router.post('/addrecipe',upload.array("images"),addNewRecipe)
 
-router.get('/:name',getRecipeDataByName)
+router.get('/:recipeName',getRecipeDataByName)
 
 
 

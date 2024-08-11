@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RecipeSchema = new Schema({
-  name:{ 
+  recipeName:{ 
     type: String, 
     required: true 
 },
@@ -80,10 +80,9 @@ const RecipeSchema = new Schema({
     }
     }
   },
-  jpg: { type: String, 
-    required: true 
-
-}
+  images: [{ 
+    type: String, 
+  }]
 });
 
 module.exports = mongoose.model('Recipe', RecipeSchema);
