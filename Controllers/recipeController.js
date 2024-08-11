@@ -52,7 +52,8 @@ const addNewRecipe = async(request, response) => {
     return response.status(201).send(addedRecipe)
   } 
   catch(err) {
-    response.status(500).json({message:err.message})
+    console.error('Error adding recipe:', err); // Log the full error
+    response.status(500).json({ message: err.message });
   }
 }
 
@@ -63,7 +64,7 @@ const getRecipeDataById = async(request,response) => {
     response.status(200).json(recipe)
   }
   catch(err){
-    console.error('Error adding recipe:', err); // Log the full error
+    
     response.status(500).json({ message: err.message });
   }
 }
