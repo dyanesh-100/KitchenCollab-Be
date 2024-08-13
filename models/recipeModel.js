@@ -40,42 +40,42 @@ const RecipeSchema = new Schema({
     per_serving: {
       calories: { 
         type: Number, 
-        required: true 
+        // required: true 
     
     },
       total_carbohydrate: { 
         type: String, 
-        required: true 
+        // required: true 
     
     },
       total_fat: { 
         type: String, 
-        required: true 
+        // required: true 
     
     },
       trans_fat: { 
         type: String, 
-        required: true 
+        // required: true 
     
     },
       dietary_fibre: { 
         type: String, 
-        required: true 
+        // required: true 
     
     },
       total_sugar: { 
         type: String, 
-        required: true 
+        // required: true 
     
     },
       cholesterol: { 
         type: String, 
-        required: true 
+        // required: true 
     
     },
       protein: { 
         type: String, 
-        required: true 
+        // required: true 
     
     }
     }
