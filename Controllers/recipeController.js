@@ -25,14 +25,16 @@ const addNewRecipe = async(request, response) => {
   const recipeImages = request.files;
   const recipeData = request.body;
 
-  console.log('Files:', request.files); // Log files received
+  console.log('Files:', request.files); 
   console.log('Body:', request.body);
 
   let images = [];
   if (recipeImages && recipeImages.length > 0){
       images = recipeImages.map(file => file.path.replace("\\","/"));
   }
+  console.log("images" + images)
 
+  
   try{
     const newRecipe = new recipeModel({
       recipeName : recipeData.recipeName,
@@ -50,9 +52,10 @@ const addNewRecipe = async(request, response) => {
     })
     const addedRecipe = await newRecipe.save()
     return response.status(201).send(addedRecipe)
+    
   } 
   catch(err) {
-    console.error('Error adding recipe:', err); // Log the full error
+    console.error('Error adding recipe:', err); 
     response.status(500).json({ message: err.message });
   }
 }
