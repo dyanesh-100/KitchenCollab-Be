@@ -20,45 +20,45 @@ const getAllRecipeData = async(request,response) =>{
 }
 
 
-const addNewRecipe = async(request, response) => {
-  
-  const recipeImages = request.files;
-  const recipeData = request.body;
-
-  console.log('Files:', request.files); 
-  console.log('Body:', request.body);
-
-  let images = [];
-  if (recipeImages && recipeImages.length > 0){
-      images = recipeImages.map(file => file.path.replace("\\","/"));
-  }
-  console.log("images" + images)
-
-  
-  try{
-    const newRecipe = new recipeModel({
-      recipeName : recipeData.recipeName,
-      description : recipeData.description,
-      
-      
-      ingredients: Array.isArray(recipeData.ingredients) ? recipeData.ingredients : [recipeData.ingredients], 
-      steps: Array.isArray(recipeData.steps) ? recipeData.steps : [recipeData.steps], 
-      
-      prep_time : recipeData.prep_time,
-      cooking_time : recipeData.cooking_time,
-      total_time : recipeData.total_time,
-      nutrition_info : recipeData.nutrition_info,
-      images : images
-    })
-    const addedRecipe = await newRecipe.save()
-    return response.status(201).send(addedRecipe)
+  const addNewRecipe = async(request, response) => {
     
-  } 
-  catch(err) {
-    console.error('Error adding recipe:', err); 
-    response.status(500).json({ message: err.message });
+    const recipeImages = request.files;
+    const recipeData = request.body;
+
+    console.log('Files:', request.files); 
+    console.log('Body:', request.body);
+
+    let images = [];
+    if (recipeImages && recipeImages.length > 0){
+        images = recipeImages.map(file => file.path.replace("\\","/"));
+    }
+    console.log("images" + images)
+
+    
+    try{
+      const newRecipe = new recipeModel({
+        recipeName : recipeData.recipeName,
+        description : recipeData.description,
+        
+        
+        ingredients: Array.isArray(recipeData.ingredients) ? recipeData.ingredients : [recipeData.ingredients], 
+        steps: Array.isArray(recipeData.steps) ? recipeData.steps : [recipeData.steps], 
+        
+        prep_time : recipeData.prep_time,
+        cooking_time : recipeData.cooking_time,
+        total_time : recipeData.total_time,
+        nutrition_info : recipeData.nutrition_info,
+        images : images
+      })
+      const addedRecipe = await newRecipe.save()
+      return response.status(201).send(addedRecipe)
+      
+    } 
+    catch(err) {
+      console.error('Error adding recipe:', err); 
+      response.status(500).json({ message: err.message });
+    }
   }
-}
 
 const getRecipeDataById = async(request,response) => {
   try{
