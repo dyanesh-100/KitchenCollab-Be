@@ -6,10 +6,7 @@ const app = express ()
 const mongoose = require('mongoose')
 const recipeRoute = require('./Routes/recipeRoute')
 const PORT = process.env.PORT
-app.use(cors({
-    origin : 'https://kitchen-collab-fe.vercel.app/',
-    methods: 'GET,POST,PUT,DELETE',
-}))
+app.use(cors())
 app.use(express.json())
 
 
